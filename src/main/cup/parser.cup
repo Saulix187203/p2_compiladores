@@ -1,0 +1,70 @@
+package com.sv;
+import java_cup.runtime.*;
+
+class Parser;
+
+/*simbolos terminales*/
+
+terminal LLAVE_O;   // {
+terminal LLAVE_I;   // }
+terminal BRACKET_O; // [
+terminal BRACKET_I; // ]
+terminal SEPARADOR; // :
+terminal COMA;      // ,
+terminal NULO;      // null
+terminal BOOLEAN;   // true | false
+terminal INTEGER;   // números enteros
+terminal DECIMAL;   // números decimales
+terminal STRING;     // cadenas "..." (strings)
+
+/*simbolos no terminales*/
+non terminal json;              // Punto de inicio del análisis
+non terminal valor;             // Cualquier valor JSON
+non terminal objeto;            // Un objeto { ... }
+non terminal array;             // Una array [ ... ]
+non terminal elementos;  // array de elementos como clave:valor
+non terminal elemento_valor;               // Un elemento_valor como "clave": valor
+non terminal elementos_array;   // array de valores dentro de un arreglo
+
+/* Indica el símbolo inicial */
+start with json;
+
+/*--------------GRAMÁTICA JSON-------------- */
+
+json ::= objeto
+       | array
+       ;
+
+/* ---------------- OBJETOS ---------------- */
+
+objeto ::= LLAVE_O LLAVE_I
+         | LLAVE_O elementos LLAVE_I
+         ;
+
+elementos ::= elemento_valor
+                   | elemento_valor COMA elementos
+                   ;
+
+elemento_valor ::= STRING SEPARADOR valor
+                    ;
+
+/* ---------------- arrayS ---------------- */
+
+array ::= BRACKET_O BRACKET_I
+        | BRACKET_O elementos_array BRACKET_I
+        ;
+
+elementos_array ::= valor
+                  | valor COMA elementos_array
+                  ;
+
+/* ---------------- VALORES ---------------- */
+
+valor ::= STRING
+        | INTEGER
+        | DECIMAL
+        | BOOLEAN
+        | NULO
+        | objeto
+        | array
+        ;
