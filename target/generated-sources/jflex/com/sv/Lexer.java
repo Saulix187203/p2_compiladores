@@ -34,7 +34,7 @@ public class Lexer implements java_cup.runtime.Scanner {
   private static final int [] ZZ_CMAP_TOP = zzUnpackcmap_top();
 
   private static final String ZZ_CMAP_TOP_PACKED_0 =
-    "\1\0\37\u0100\1\u0200\267\u0100\10\u0300\u1020\u0100";
+    "\1\0\u10ff\u0100";
 
   private static int [] zzUnpackcmap_top() {
     int [] result = new int[4352];
@@ -62,15 +62,14 @@ public class Lexer implements java_cup.runtime.Scanner {
   private static final int [] ZZ_CMAP_BLOCKS = zzUnpackcmap_blocks();
 
   private static final String ZZ_CMAP_BLOCKS_PACKED_0 =
-    "\11\0\2\1\2\0\1\1\22\0\1\1\1\2\1\3"+
-    "\3\2\4\0\2\2\1\4\1\5\1\6\1\2\12\7"+
-    "\1\10\1\0\3\2\2\0\32\2\1\11\1\0\1\12"+
-    "\1\0\1\2\1\0\1\13\3\2\1\14\1\15\5\2"+
-    "\1\16\1\2\1\17\3\2\1\20\1\21\1\22\1\23"+
-    "\5\2\1\24\1\0\1\25\43\0\1\2\u035e\0";
+    "\11\0\2\1\2\0\1\1\22\0\1\1\1\0\1\2"+
+    "\11\0\1\3\1\4\1\5\1\0\12\6\1\7\40\0"+
+    "\1\10\1\0\1\11\3\0\1\12\3\0\1\13\1\14"+
+    "\5\0\1\15\1\0\1\16\3\0\1\17\1\20\1\21"+
+    "\1\22\5\0\1\23\1\0\1\24\u0182\0";
 
   private static int [] zzUnpackcmap_blocks() {
-    int [] result = new int[1024];
+    int [] result = new int[512];
     int offset = 0;
     offset = zzUnpackcmap_blocks(ZZ_CMAP_BLOCKS_PACKED_0, offset, result);
     return result;
@@ -124,10 +123,10 @@ public class Lexer implements java_cup.runtime.Scanner {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\26\0\54\0\102\0\54\0\130\0\156\0\26"+
-    "\0\26\0\26\0\204\0\232\0\260\0\26\0\26\0\102"+
-    "\0\26\0\306\0\334\0\362\0\u0108\0\306\0\u011e\0\u0134"+
-    "\0\u014a\0\u0160\0\26\0\26\0\26";
+    "\0\0\0\25\0\52\0\77\0\25\0\124\0\151\0\25"+
+    "\0\25\0\25\0\176\0\223\0\250\0\25\0\25\0\77"+
+    "\0\25\0\275\0\322\0\347\0\374\0\275\0\u0111\0\u0126"+
+    "\0\u013b\0\u0150\0\25\0\25\0\25";
 
   private static int [] zzUnpackRowMap() {
     int [] result = new int[29];
@@ -153,17 +152,16 @@ public class Lexer implements java_cup.runtime.Scanner {
   private static final int [] ZZ_TRANS = zzUnpacktrans();
 
   private static final String ZZ_TRANS_PACKED_0 =
-    "\1\2\1\3\1\2\1\4\1\5\1\6\1\2\1\7"+
-    "\1\10\1\11\1\12\2\2\1\13\1\2\1\14\2\2"+
-    "\1\15\1\2\1\16\1\17\27\0\1\3\2\0\1\3"+
-    "\23\0\1\20\1\21\1\20\2\0\1\20\3\0\11\20"+
-    "\11\0\1\7\24\0\1\22\1\7\31\0\1\23\35\0"+
-    "\1\24\22\0\1\25\14\0\1\26\34\0\1\27\25\0"+
-    "\1\30\32\0\1\31\23\0\1\32\22\0\1\33\23\0"+
-    "\1\34\25\0\1\35\11\0";
+    "\1\2\1\3\1\4\1\5\1\6\1\2\1\7\1\10"+
+    "\1\11\1\12\2\2\1\13\1\2\1\14\2\2\1\15"+
+    "\1\2\1\16\1\17\26\0\1\3\23\0\2\20\1\21"+
+    "\22\20\6\0\1\7\23\0\1\22\1\7\30\0\1\23"+
+    "\34\0\1\24\21\0\1\25\13\0\1\26\33\0\1\27"+
+    "\24\0\1\30\31\0\1\31\22\0\1\32\21\0\1\33"+
+    "\22\0\1\34\24\0\1\35\11\0";
 
   private static int [] zzUnpacktrans() {
-    int [] result = new int[374];
+    int [] result = new int[357];
     int offset = 0;
     offset = zzUnpacktrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -206,8 +204,8 @@ public class Lexer implements java_cup.runtime.Scanner {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\1\0\1\11\5\1\3\11\3\1\2\11\1\0\1\11"+
-    "\4\0\1\1\4\0\3\11";
+    "\1\0\1\11\2\1\1\11\2\1\3\11\3\1\2\11"+
+    "\1\0\1\11\4\0\1\1\4\0\3\11";
 
   private static int [] zzUnpackAttribute() {
     int [] result = new int[29];
@@ -566,7 +564,6 @@ public class Lexer implements java_cup.runtime.Scanner {
     if (!zzEOFDone) {
       zzEOFDone = true;
     
-return new Symbol(ParserSym.EOF);
   yyclose();    }
   }
 
@@ -580,7 +577,7 @@ return new Symbol(ParserSym.EOF);
    * @return the next token.
    * @exception java.io.IOException if any I/O-Error occurs.
    */
-  @Override  public java_cup.runtime.Symbol next_token() throws java.io.IOException
+  @Override  public Symbol next_token() throws java.io.IOException
   {
     int zzInput;
     int zzAction;
@@ -661,7 +658,8 @@ return new Symbol(ParserSym.EOF);
       if (zzInput == YYEOF && zzStartRead == zzCurrentPos) {
         zzAtEOF = true;
             zzDoEOF();
-          { return new java_cup.runtime.Symbol(sym.EOF); }
+          {   return symbol(ParserSym.EOF);
+ }
       }
       else {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {

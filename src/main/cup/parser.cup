@@ -1,10 +1,12 @@
 package com.sv;
 import java_cup.runtime.*;
+import com.sv.ast.*;
+import java.util.ArrayList;
+import java.util.List;
 
 class Parser;
 
 /*simbolos terminales*/
-
 terminal LLAVE_O;   // {
 terminal LLAVE_I;   // }
 terminal BRACKET_O; // [
@@ -18,53 +20,92 @@ terminal DECIMAL;   // números decimales
 terminal STRING;     // cadenas "..." (strings)
 
 /*simbolos no terminales*/
-non terminal json;              // Punto de inicio del análisis
-non terminal valor;             // Cualquier valor JSON
-non terminal objeto;            // Un objeto { ... }
-non terminal array;             // Una array [ ... ]
-non terminal elementos;  // array de elementos como clave:valor
-non terminal elemento_valor;               // Un elemento_valor como "clave": valor
-non terminal elementos_array;   // array de valores dentro de un arreglo
+non terminal ASTNode json;              // Punto de inicio del análisis
+non terminal ASTNode valor;             // Cualquier valor JSON
+non terminal ObjectNode objeto;         // Un objeto { ... }
+non terminal ArrayNode array;           // Una array [ ... ]
+non terminal List elementos;            // array de elementos como clave:valor
+non terminal PropertyNode elemento_valor;  // Un elemento_valor como "clave": valor
+non terminal List elementos_array;      // array de valores dentro de un arreglo
 
 /* Indica el símbolo inicial */
 start with json;
 
 /*--------------GRAMÁTICA JSON-------------- */
 
-json ::= objeto
-       | array
+json ::= objeto:obj
+         {: RESULT = obj; :}
+       | array:arr
+         {: RESULT = arr; :}
        ;
 
 /* ---------------- OBJETOS ---------------- */
 
 objeto ::= LLAVE_O LLAVE_I
-         | LLAVE_O elementos LLAVE_I
+         {: RESULT = ASTBuilder.createEmptyObject(); :}
+         | LLAVE_O elementos:elems LLAVE_I
+         {: RESULT = ASTBuilder.createObject((List<PropertyNode>) elems); :}
          ;
 
-elementos ::= elemento_valor
-                   | elemento_valor COMA elementos
+elementos ::= elemento_valor:elem
+                   {:
+                      List<PropertyNode> list = new ArrayList<>();
+                      list.add(elem);
+                      RESULT = list;
+                   :}
+                   | elemento_valor:elem COMA elementos:rest
+                   {:
+                      List<PropertyNode> list = new ArrayList<>();
+                      list.add(elem);
+                      list.addAll((List<PropertyNode>) rest);
+                      RESULT = list;
+                   :}
                    ;
 
-elemento_valor ::= STRING SEPARADOR valor
+elemento_valor ::= STRING:key SEPARADOR valor:val
+                    {:
+                       String cleanKey = key.toString().replaceAll("^\"|\"$", "");
+                       RESULT = ASTBuilder.createProperty(cleanKey, (ASTNode) val);
+                    :}
                     ;
 
-/* ---------------- arrayS ---------------- */
+/* ---------------- ARRAYS ---------------- */
 
 array ::= BRACKET_O BRACKET_I
-        | BRACKET_O elementos_array BRACKET_I
+        {: RESULT = ASTBuilder.createEmptyArray(); :}
+        | BRACKET_O elementos_array:elems BRACKET_I
+        {: RESULT = ASTBuilder.createArray((List<ASTNode>) elems); :}
         ;
 
-elementos_array ::= valor
-                  | valor COMA elementos_array
+elementos_array ::= valor:val
+                  {:
+                     List<ASTNode> list = new ArrayList<>();
+                     list.add((ASTNode) val);
+                     RESULT = list;
+                  :}
+                  | valor:val COMA elementos_array:rest
+                  {:
+                     List<ASTNode> list = new ArrayList<>();
+                     list.add((ASTNode) val);
+                     list.addAll((List<ASTNode>) rest);
+                     RESULT = list;
+                  :}
                   ;
 
 /* ---------------- VALORES ---------------- */
 
-valor ::= STRING
-        | INTEGER
-        | DECIMAL
-        | BOOLEAN
+valor ::= STRING:val
+        {: RESULT = ASTBuilder.createStringValue(val.toString()); :}
+        | INTEGER:val
+        {: RESULT = ASTBuilder.createIntegerValue((Integer) val); :}
+        | DECIMAL:val
+        {: RESULT = ASTBuilder.createDecimalValue((Float) val); :}
+        | BOOLEAN:val
+        {: RESULT = ASTBuilder.createBooleanValue((Boolean) val); :}
         | NULO
-        | objeto
-        | array
+        {: RESULT = ASTBuilder.createNullValue(); :}
+        | objeto:obj
+        {: RESULT = obj; :}
+        | array:arr
+        {: RESULT = arr; :}
         ;

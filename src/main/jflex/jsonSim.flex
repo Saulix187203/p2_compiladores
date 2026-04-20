@@ -5,19 +5,15 @@ import java_cup.runtime.*;
 %public
 %class Lexer
 %cup
+%type Symbol
+%function next_token
 
 // caracteres básicos
-LETRA = [a-zA-Z]+
 NUMERO = [0-9]+
-SIMBOLOS= [_,#,$,%,¡]+
-ARITMETICOS= [+,-,*,/]
-COMPARADORES= [=,!,<,>]
-ESPACIO=[ , \t,\r,\n]+ // espacios de tabuladores
-
-//valores primitivos y no primitivos
-ENTERO = ("-"{NUMERO} |{NUMERO})
+ESPACIO = [ \t\r\n]+ // espacios, tabuladores, saltos de línea
+ENTERO = ("-"?{NUMERO})
 DECIMAL = (-?{NUMERO}+\.{NUMERO}+)
-VALOR = "\"" ( ( {LETRA} | {NUMERO} | {SIMBOLOS}+|{ARITMETICOS}+|{COMPARADORES}+ )* ) "\""
+VALOR = "\"" ( [^\"]* ) "\"" // cualquier texto entre comillas dobles
 
 %{
     StringBuffer buffer = new StringBuffer();
@@ -30,7 +26,7 @@ VALOR = "\"" ( ( {LETRA} | {NUMERO} | {SIMBOLOS}+|{ARITMETICOS}+|{COMPARADORES}+
 %}
 
 %eofval{
-  return new Symbol(ParserSym.EOF);
+  return symbol(ParserSym.EOF);
 %eofval}
 
 %%
@@ -47,7 +43,6 @@ VALOR = "\"" ( ( {LETRA} | {NUMERO} | {SIMBOLOS}+|{ARITMETICOS}+|{COMPARADORES}+
 {ENTERO}         { return symbol(ParserSym.INTEGER, Integer.valueOf(yytext())); }
 {DECIMAL}        { return symbol(ParserSym.DECIMAL, Float.valueOf(yytext())); }
 {VALOR}         { return symbol(ParserSym.STRING, yytext()); }
-{ESPACIO}+       {/*Ignorar espacios en blanco*/}
-[^]              {throw new Error("Caracter no reconocido: " + yytext()); }
-.          { throw new Error("Caracter no reconocido: " + yytext()); }
+{ESPACIO}       {/*Ignorar espacios en blanco*/}
+[^]             {throw new Error("Caracter no reconocido: " + yytext()); }
 

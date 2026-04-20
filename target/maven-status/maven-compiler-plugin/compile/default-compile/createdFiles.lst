@@ -1,4 +1,12 @@
+com/sv/ast/ArrayNode.class
+com/sv/ast/PropertyNode.class
+com/sv/ast/ASTNode.class
+com/sv/ast/ValueNode.class
 com/sv/App.class
 com/sv/ParserSym.class
+com/sv/Lexer.class
+com/sv/ast/ASTBuilder.class
+com/sv/ast/ObjectNode.class
+com/sv/ast/GraphvizGenerator.class
 com/sv/Parser.class
 com/sv/Parser$CUP$Parser$actions.class

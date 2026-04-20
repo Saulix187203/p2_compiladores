@@ -1,0 +1,42 @@
+digraph AST {
+    rankdir=TB;
+    node [shape=box, style=filled, fillcolor=lightblue];
+    edge [color=black];
+
+    node0 [label="Object", fillcolor=lightgreen]
+    node1 [label="squadName", fillcolor=lightcyan]
+    node2 [label="\"Super hero squad\"", fillcolor=lightcoral]
+    node3 [label="homeTown", fillcolor=lightcyan]
+    node4 [label="\"Metro City\"", fillcolor=lightcoral]
+    node5 [label="formed", fillcolor=lightcyan]
+    node6 [label="2016", fillcolor=lightcoral]
+    node7 [label="secretBase", fillcolor=lightcyan]
+    node8 [label="\"Super tower\"", fillcolor=lightcoral]
+    node9 [label="active", fillcolor=lightcyan]
+    node10 [label="true", fillcolor=lightcoral]
+    node11 [label="members", fillcolor=lightcyan]
+    node12 [label="Array", fillcolor=lightyellow]
+    node13 [label="Object", fillcolor=lightgreen]
+    node14 [label="name", fillcolor=lightcyan]
+    node15 [label="\"Molecule Man\"", fillcolor=lightcoral]
+    node16 [label="age", fillcolor=lightcyan]
+    node17 [label="29", fillcolor=lightcoral]
+
+    node1 -> node2
+    node0 -> node1
+    node3 -> node4
+    node0 -> node3
+    node5 -> node6
+    node0 -> node5
+    node7 -> node8
+    node0 -> node7
+    node9 -> node10
+    node0 -> node9
+    node14 -> node15
+    node13 -> node14
+    node16 -> node17
+    node13 -> node16
+    node12 -> node13
+    node11 -> node12
+    node0 -> node11
+}

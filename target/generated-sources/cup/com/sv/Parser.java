@@ -6,6 +6,9 @@
 package com.sv;
 
 import java_cup.runtime.*;
+import com.sv.ast.*;
+import java.util.ArrayList;
+import java.util.List;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -153,7 +156,7 @@ class CUP$Parser$actions {
               Object RESULT =null;
 		int start_valleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
 		int start_valright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
-		Object start_val = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
+		ASTNode start_val = (ASTNode)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
 		RESULT = start_val;
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("$START",0, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
@@ -164,8 +167,11 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 1: // json ::= objeto 
             {
-              Object RESULT =null;
-
+              ASTNode RESULT =null;
+		int objleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int objright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		ObjectNode obj = (ObjectNode)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		 RESULT = obj; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("json",0, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -173,8 +179,11 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 2: // json ::= array 
             {
-              Object RESULT =null;
-
+              ASTNode RESULT =null;
+		int arrleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int arrright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		ArrayNode arr = (ArrayNode)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		 RESULT = arr; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("json",0, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -182,8 +191,8 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 3: // objeto ::= LLAVE_O LLAVE_I 
             {
-              Object RESULT =null;
-
+              ObjectNode RESULT =null;
+		 RESULT = ASTBuilder.createEmptyObject(); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("objeto",2, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -191,8 +200,11 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 4: // objeto ::= LLAVE_O elementos LLAVE_I 
             {
-              Object RESULT =null;
-
+              ObjectNode RESULT =null;
+		int elemsleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
+		int elemsright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
+		List elems = (List)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
+		 RESULT = ASTBuilder.createObject((List<PropertyNode>) elems); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("objeto",2, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -200,8 +212,15 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 5: // elementos ::= elemento_valor 
             {
-              Object RESULT =null;
-
+              List RESULT =null;
+		int elemleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int elemright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		PropertyNode elem = (PropertyNode)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		
+                      List<PropertyNode> list = new ArrayList<>();
+                      list.add(elem);
+                      RESULT = list;
+                   
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("elementos",4, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -209,8 +228,19 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 6: // elementos ::= elemento_valor COMA elementos 
             {
-              Object RESULT =null;
-
+              List RESULT =null;
+		int elemleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).left;
+		int elemright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
+		PropertyNode elem = (PropertyNode)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
+		int restleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int restright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		List rest = (List)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		
+                      List<PropertyNode> list = new ArrayList<>();
+                      list.add(elem);
+                      list.addAll((List<PropertyNode>) rest);
+                      RESULT = list;
+                   
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("elementos",4, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -218,8 +248,17 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 7: // elemento_valor ::= STRING SEPARADOR valor 
             {
-              Object RESULT =null;
-
+              PropertyNode RESULT =null;
+		int keyleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).left;
+		int keyright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
+		Object key = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
+		int valleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int valright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		ASTNode val = (ASTNode)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		
+                       String cleanKey = key.toString().replaceAll("^\"|\"$", "");
+                       RESULT = ASTBuilder.createProperty(cleanKey, (ASTNode) val);
+                    
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("elemento_valor",5, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -227,8 +266,8 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 8: // array ::= BRACKET_O BRACKET_I 
             {
-              Object RESULT =null;
-
+              ArrayNode RESULT =null;
+		 RESULT = ASTBuilder.createEmptyArray(); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("array",3, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -236,8 +275,11 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 9: // array ::= BRACKET_O elementos_array BRACKET_I 
             {
-              Object RESULT =null;
-
+              ArrayNode RESULT =null;
+		int elemsleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
+		int elemsright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
+		List elems = (List)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
+		 RESULT = ASTBuilder.createArray((List<ASTNode>) elems); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("array",3, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -245,8 +287,15 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 10: // elementos_array ::= valor 
             {
-              Object RESULT =null;
-
+              List RESULT =null;
+		int valleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int valright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		ASTNode val = (ASTNode)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		
+                     List<ASTNode> list = new ArrayList<>();
+                     list.add((ASTNode) val);
+                     RESULT = list;
+                  
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("elementos_array",6, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -254,8 +303,19 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 11: // elementos_array ::= valor COMA elementos_array 
             {
-              Object RESULT =null;
-
+              List RESULT =null;
+		int valleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).left;
+		int valright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
+		ASTNode val = (ASTNode)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
+		int restleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int restright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		List rest = (List)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		
+                     List<ASTNode> list = new ArrayList<>();
+                     list.add((ASTNode) val);
+                     list.addAll((List<ASTNode>) rest);
+                     RESULT = list;
+                  
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("elementos_array",6, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -263,8 +323,11 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 12: // valor ::= STRING 
             {
-              Object RESULT =null;
-
+              ASTNode RESULT =null;
+		int valleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int valright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Object val = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		 RESULT = ASTBuilder.createStringValue(val.toString()); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("valor",1, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -272,8 +335,11 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 13: // valor ::= INTEGER 
             {
-              Object RESULT =null;
-
+              ASTNode RESULT =null;
+		int valleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int valright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Object val = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		 RESULT = ASTBuilder.createIntegerValue((Integer) val); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("valor",1, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -281,8 +347,11 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 14: // valor ::= DECIMAL 
             {
-              Object RESULT =null;
-
+              ASTNode RESULT =null;
+		int valleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int valright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Object val = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		 RESULT = ASTBuilder.createDecimalValue((Float) val); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("valor",1, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -290,8 +359,11 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 15: // valor ::= BOOLEAN 
             {
-              Object RESULT =null;
-
+              ASTNode RESULT =null;
+		int valleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int valright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Object val = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		 RESULT = ASTBuilder.createBooleanValue((Boolean) val); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("valor",1, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -299,8 +371,8 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 16: // valor ::= NULO 
             {
-              Object RESULT =null;
-
+              ASTNode RESULT =null;
+		 RESULT = ASTBuilder.createNullValue(); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("valor",1, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -308,8 +380,11 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 17: // valor ::= objeto 
             {
-              Object RESULT =null;
-
+              ASTNode RESULT =null;
+		int objleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int objright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		ObjectNode obj = (ObjectNode)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		 RESULT = obj; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("valor",1, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -317,8 +392,11 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 18: // valor ::= array 
             {
-              Object RESULT =null;
-
+              ASTNode RESULT =null;
+		int arrleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int arrright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		ArrayNode arr = (ArrayNode)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		 RESULT = arr; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("valor",1, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
